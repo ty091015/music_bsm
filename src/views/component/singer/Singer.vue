@@ -60,13 +60,7 @@
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="歌手风格" width="150" show-overflow-tooltip>
-          <template #default="scope">
-            <span v-for="(item, index) in scope.row.hobby" :key="index">
-              {{ item }}
-            </span>
-          </template>
-        </el-table-column>
+        <el-table-column prop="hobby" label="歌手风格" width="100"/>
         <el-table-column prop="birth" label="出生日期" width="85">
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.birth }}</span>
@@ -117,11 +111,11 @@
               <el-input v-model="form.introduce"></el-input>
             </el-form-item>
             <el-form-item label="歌手风格" prop="hobby">
-              <el-checkbox-group v-model="form.hobby">
-                <el-checkbox label="中国风"/>
-                <el-checkbox label="流行音乐"/>
-                <el-checkbox label="怀旧老歌"/>
-              </el-checkbox-group>
+              <el-radio v-model="form.hobby" label="中国风" size="small">中国风</el-radio>
+              <el-radio v-model="form.hobby" label="流行音乐" size="small">流行音乐</el-radio>
+              <el-radio v-model="form.hobby" label="怀旧老歌" size="small">怀旧老歌</el-radio>
+              <el-radio v-model="form.hobby" label="粤语" size="small">粤语</el-radio>
+              <el-radio v-model="form.hobby" label="情歌" size="small">情歌</el-radio>
             </el-form-item>
             <el-form-item label="出生日期" prop="birth">
               <el-date-picker
@@ -205,14 +199,12 @@ export default {
   methods: {
     //数据
     getDataSource() {
-      console.log('发送请求，获取数据')
       request
           .request({
             method: "get",
             url: "/api/singer/getSinger",
           })
           .then((res) => {
-            console.log(res)
             if (res.data.code == 200) {
               this.tableData = res.data.data;
               this.filTableData = res.data.data;
@@ -239,8 +231,6 @@ export default {
       this.showDialog = true;
       this.title = "修改用户";
       this.form = row;
-      this.form.hobby = row.hobby.split(",");
-      // console.log('编辑', this.form.hobby)
     },
     //上传获取row
     uploadClick(row) {
@@ -257,7 +247,7 @@ export default {
         });
         return
       }
-      const p = new Promise((resolve, reject) => {
+      const p = new Promise((resolve) => {
         let formData = new FormData()
         formData.append('file', param.file)
         request.request({
@@ -304,8 +294,6 @@ export default {
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.form.birth = dateFormat("YYYY-mm-dd", this.form.birth);
-          this.form.hobby = this.form.hobby.join(",");
-          // console.log("编辑后", this.form.hobby)
           if (this.form.singerId) {
             request
                 .request({
@@ -339,7 +327,6 @@ export default {
                   data: this.form,
                 })
                 .then((res) => {
-                  this.form.hobby = this.form.hobby.split(",");
                   if (res.data.code == 200) {
                     this.getDataSource();
                     this.showDialog = false;
