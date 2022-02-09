@@ -53,24 +53,19 @@
 
               >
                 <img style="width: 30px;" :src="uploadImg" alt="找不到">
-                <img style="width: 40px" :src="scope.row.photo" class="avatar"/>
+                <img style="width: 40px" :src="scope.row.photo"/>
               </el-upload>
             </el-icon>
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="60"/>
-        <el-table-column label="介绍" width="100">
+        <el-table-column prop="collect" label="收藏(songId)" width="100"/>
+        <el-table-column label="格言" width="100">
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="爱好" width="150">
-          <template #default="scope">
-            <span v-for="(item, index) in scope.row.hobby" :key="index">
-              {{ item }}
-            </span>
-          </template>
-        </el-table-column>
+        <el-table-column prop="hobby" label="爱好" width="100"/>
         <el-table-column prop="birth" label="出生日期" width="85">
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.birth }}</span>
@@ -123,15 +118,18 @@
               <el-radio v-model="form.sex" label="男" size="large">男</el-radio>
               <el-radio v-model="form.sex" label="女" size="large">女</el-radio>
             </el-form-item>
+            <el-form-item label="收藏">
+              <el-input v-model="form.collect"></el-input>
+            </el-form-item>
             <el-form-item label="介绍" prop="introduce">
               <el-input v-model="form.introduce"></el-input>
             </el-form-item>
-            <el-form-item label="爱好" prop="hobby">
-              <el-checkbox-group v-model="form.hobby">
-                <el-checkbox label="中国风"/>
-                <el-checkbox label="流行音乐"/>
-                <el-checkbox label="怀旧老歌"/>
-              </el-checkbox-group>
+            <el-form-item label="爱好风格" prop="hobby">
+              <el-radio v-model="form.hobby" label="中国风" size="small">中国风</el-radio>
+              <el-radio v-model="form.hobby" label="流行音乐" size="small">流行音乐</el-radio>
+              <el-radio v-model="form.hobby" label="怀旧老歌" size="small">怀旧老歌</el-radio>
+              <el-radio v-model="form.hobby" label="粤语" size="small">粤语</el-radio>
+              <el-radio v-model="form.hobby" label="情歌" size="small">情歌</el-radio>
             </el-form-item>
             <el-form-item label="出生日期" prop="birth">
               <el-date-picker
@@ -187,12 +185,13 @@ export default {
       form: {
         account: "",
         birth: "",
-        hobby: '',
+        hobby: '中国风',
         introduce: "",
         name: "",
         password: "123",
         sex: "女",
-        photo: ''
+        photo: '',
+        collect:''
       },
       rules: {
         account: [
@@ -232,11 +231,6 @@ export default {
             if (res.data.code == 200) {
               this.tableData = res.data.data;
               this.filTableData = res.data.data;
-              // const hobby = res.data.data.map((item) => {
-              //   const arr = item.hobby.split(",");
-              //   return arr;
-              // });
-              // this.form.hobby = hobby;
             }
           });
     },
@@ -250,17 +244,23 @@ export default {
     addUser() {
       this.showDialog = true;
       this.title = "新增用户";
-      this.form = {
-        sex: "男",
-        hobby: ["流行音乐"],
-      };
+      this.form={
+        account: "",
+        birth: "",
+        hobby: '中国风',
+        introduce: "",
+        name: "",
+        password: "123",
+        sex: "女",
+        photo: '',
+        collect:''
+      }
     },
     //编辑
     editUser(row) {
       this.showDialog = true;
       this.title = "修改用户";
       this.form = row;
-      this.form.hobby = row.hobby.split(",");
     },
     //上传获取row
     uploadClick(row) {
@@ -323,8 +323,6 @@ export default {
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.form.birth = dateFormat("YYYY-mm-dd", this.form.birth);
-          this.form.hobby = this.form.hobby.join(",");
-          // console.log("编辑后", this.form.hobby)
           if (this.form.userId) {
             request
                 .request({
@@ -358,7 +356,6 @@ export default {
                   data: this.form,
                 })
                 .then((res) => {
-                  this.form.hobby = this.form.hobby.split(",");
                   if (res.data.code == 200) {
                     this.getDataSource();
                     this.showDialog = false;
@@ -383,7 +380,7 @@ export default {
     onCancel(form) {
       this.showDialog = false;
       this.getDataSource();
-      this.$refs[form].resetFields()
+      this.$refs[form].resetFields();
     },
     //选择框改变
     SelectionChange(value) {
@@ -484,7 +481,7 @@ export default {
 
 .table {
   width: 96%;
-  height: 495px;
+  height: 492px;
   margin-left: 2%;
   overflow: auto;
 }

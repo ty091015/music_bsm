@@ -13,8 +13,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <button @click="toLogin">登录</button>
-            <button @click="toRegister">注册</button>
+            <button @click="toLogin" style="width: 150px;border-radius: 20%">登录</button>
           </td>
         </tr>
       </form>

@@ -40,7 +40,7 @@
             <p class="showOverTooltip">{{ scope.row.name }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲简介" width="150" show-overflow-tooltip>
+        <el-table-column label="歌曲风格|简介" width="150" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.introduce }}</p>
           </template>
@@ -153,7 +153,7 @@
             <el-form-item label="歌曲名" prop="name">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="介绍" prop="introduce">
+            <el-form-item label="歌曲风格|简介" prop="introduce">
               <el-input v-model="form.introduce"></el-input>
             </el-form-item>
             <el-form-item>
@@ -275,6 +275,15 @@ export default {
     addSinger() {
       this.showDialog = true;
       this.title = "新增歌曲";
+      this.form={
+        name: '',
+        photo: '',
+        lyric: "",
+        url: '',
+        introduce: '',
+        type: '',
+        singerId: ''
+      }
     },
     //编辑
     editSong(row) {
@@ -352,7 +361,7 @@ export default {
         });
         return
       }
-      const p = new Promise((resolve, reject) => {
+      const p = new Promise((resolve) => {
         let formData = new FormData()
         formData.append('file', param.file)
         request.request({

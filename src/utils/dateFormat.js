@@ -20,4 +20,4 @@ export function dateFormat(fmt, date) {
     }
   }
   return fmt;
-};
+}
