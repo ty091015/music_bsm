@@ -224,20 +224,6 @@ export default {
     };
   },
   methods: {
-    getSingerName(singerId) {
-      request
-          .request({
-            method: "get",
-            url: "/api/singer/getSinger",
-            params: {
-              singerId
-            }
-          }).then(res => {
-        if (res.data.code == 200) {
-          console.log(res.data.data)
-        }
-      })
-    },
     //歌手信息
     getDataSource_Singer() {
       request
@@ -558,14 +544,11 @@ export default {
     },
     //  val表示当前页大小
     handleSizeChange(val) {
-      // console.log(`${val} items per page`);
       this.pageSize = val;
     },
     //控制跳转到第几页，val表示当前页数
     handleCurrentChange(val) {
-      // console.log(`current page: ${val}`);
       this.currentPage = val;
-      // console.log(this.currentPage);
     },
   },
   mounted() {

@@ -43,7 +43,6 @@ export default {
         url: '/api/user/login',
         data: this.user
       }).then(res => {
-        // console.log(res)
         if (res.data.code == 200) {
           if (this.user.account == 'admin' && this.user.password == '123') {
             const token = res.data.data.token;

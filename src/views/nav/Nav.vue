@@ -40,7 +40,7 @@ export default {
         {route: "/user", photo: require('../../assets/photo/photo4.jpg'), title: '用户管理'},
         {route: "/singer", photo: require('../../assets/photo/photo3.jpg'), title: '歌手管理'},
         {route: "/song", photo: require('../../assets/photo/photo2.jpg'), title: '歌曲管理'},
-        {route: "/user", photo: require('../../assets/photo/photo1.jpg'), title: '专辑管理'},
+        // {route: "/user", photo: require('../../assets/photo/photo1.jpg'), title: '专辑管理'},
       ]
     };
   },
@@ -49,7 +49,7 @@ export default {
       // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     hide() {
       this.$refs.nav.style.width = "100px";

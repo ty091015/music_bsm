@@ -442,14 +442,11 @@ export default {
     },
     //  val表示当前页大小
     handleSizeChange(val) {
-      // console.log(`${val} items per page`);
       this.pageSize = val;
     },
     //控制跳转到第几页，val表示当前页数
     handleCurrentChange(val) {
-      // console.log(`current page: ${val}`);
       this.currentPage = val;
-      // console.log(this.currentPage);
     },
   },
   mounted() {

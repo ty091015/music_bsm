@@ -44,7 +44,6 @@ export default {
       console.log("更换头像")
     },
     logOut() {
-      // console.log("登出");
       this.$router.push('/login');
       localStorage.removeItem('admin')
     },

@@ -14,4 +14,3 @@ app.mount('#app')
 for (const i in icons) {
   app.component(i, icons[i])
 }
-console.log(app)

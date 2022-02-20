@@ -11,7 +11,6 @@ instance.interceptors.request.use(
       const token = localStorage.getItem('token')
       config.headers.Authorization = 'Bearer ' + token//----*********必须加++++'Bearer '
     }
-    // console.log('config', config)
     return config
   },
   function (error) {
