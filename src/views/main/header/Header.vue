@@ -3,7 +3,7 @@
     <!-- <el-icon :size="30" color="#409EFC" class="header_icon">
       <fold />
     </el-icon>-->
-    <span class="header_span">VUE测试</span>
+    <span class="header_span">基于VUE的音乐类APP设计与实现后台管理系统</span>
     <div class="header_photo">
       <div class="photo">
         <img :src="photo" />
@@ -18,7 +18,6 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item @click="changePhoto">更换头像</el-dropdown-item>
             <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -40,9 +39,6 @@ export default {
     };
   },
   methods: {
-    changePhoto() {
-      console.log("更换头像")
-    },
     logOut() {
       this.$router.push('/login');
       localStorage.removeItem('admin')

@@ -10,14 +10,15 @@
       />
       <el-button @click="handleSearch" style="margin-left: 10px"
       >搜索
-      </el-button
-      >
+      </el-button>
       <el-button @click="addUser" type="primary">新增用户</el-button>
       <el-button @click="deleteUser" type="danger">批量删除</el-button>
     </div>
     <!--  表格数据  -->
     <div class="table">
       <el-table
+          v-loading="loading"
+          class="elTable"
           :cell-style="{ textAlign: 'center' }"
           :header-cell-style="{ textAlign: 'center' }"
           border
@@ -31,17 +32,14 @@
           style="width: 100%"
           @selection-change="SelectionChange"
       >
-        <el-table-column type="selection" width="40"/>
+        <el-table-column type="selection" width="35"/>
         <el-table-column fixed prop="userId" label="userId" width="70"/>
-        <el-table-column fixed prop="account" label="账号" width="100"/>
-        <el-table-column prop="password" label="密码" width="100"/>
-        <el-table-column prop="name" label="姓名" width="100"/>
-        <el-table-column label="头像" width="100" style="height: 40px">
+        <el-table-column label="头像" width="80" style="height: 40px">
           <template #default="scope">
             <el-icon
                 class="el-icon--center"
                 @click="uploadClick(scope.row)"
-                style="width: 40px !important;"
+                style="width: 40px !important"
             >
               <el-upload
                   class="avatar-uploader"
@@ -50,23 +48,78 @@
                   :limit="1"
                   ref="uploadPhoto"
                   :http-request="uploadPhoto"
-
               >
-                <img style="width: 30px;" :src="uploadImg" alt="找不到">
+                <img style="width: 28px" :src="uploadImg" alt="找不到"/>
                 <img style="width: 40px" :src="scope.row.photo"/>
               </el-upload>
             </el-icon>
           </template>
         </el-table-column>
-        <el-table-column prop="sex" label="性别" width="60"/>
-        <el-table-column prop="collect" label="收藏(songId)" width="100"/>
-        <el-table-column label="格言" width="100">
+        <el-table-column
+            prop="account"
+            label="账号"
+            width="100"
+            show-overflow-tooltip
+        >
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.account }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="name"
+            label="密码"
+            width="50"
+            show-overflow-tooltip
+        >
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.password }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+            prop="name"
+            label="别名"
+            width="115"
+            show-overflow-tooltip
+        >
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="sex" label="性别" width="50"/>
+        <el-table-column label="收藏歌手" width="100" show-overflow-tooltip>
+          <template #default="scope">
+            <span class="showOverTooltip">{{
+                scope.row.collectSingerIds
+              }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="收藏歌曲" width="100" show-overflow-tooltip>
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.collectSongIds }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="介绍" width="100" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="hobby" label="爱好" width="100"/>
-        <el-table-column prop="birth" label="出生日期" width="85">
+        <el-table-column
+            prop="hobby"
+            label="爱好"
+            width="103"
+            show-overflow-tooltip
+        >
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.hobby }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            prop="birth"
+            label="出生日期"
+            width="85"
+            show-overflow-tooltip
+        >
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.birth }}</span>
           </template>
@@ -85,12 +138,10 @@
           <template #default="scope">
             <el-button type="text" size="small" @click="editUser(scope.row)"
             >编辑
-            </el-button
-            >
+            </el-button>
             <el-button type="danger" size="small" @click="deleteUser(scope.row)"
             >删除
-            </el-button
-            >
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -99,12 +150,7 @@
     <div class="modal">
       <el-dialog v-model="showDialog" :title="title" width="40%" center>
         <div class="content">
-          <el-form
-              ref="form"
-              :model="form"
-              label-width="120px"
-              :rules="rules"
-          >
+          <el-form ref="form" :model="form" label-width="120px" :rules="rules">
             <el-form-item label="账号" prop="account">
               <el-input v-model="form.account"></el-input>
             </el-form-item>
@@ -118,18 +164,30 @@
               <el-radio v-model="form.sex" label="男" size="large">男</el-radio>
               <el-radio v-model="form.sex" label="女" size="large">女</el-radio>
             </el-form-item>
-            <el-form-item label="收藏">
-              <el-input v-model="form.collect"></el-input>
-            </el-form-item>
             <el-form-item label="介绍" prop="introduce">
               <el-input v-model="form.introduce"></el-input>
             </el-form-item>
+            <el-form-item label="收藏歌手" v-show="title == '修改用户'">
+              <el-input v-model="form.collectSingerIds"></el-input>
+            </el-form-item>
+            <el-form-item label="收藏歌曲" v-show="title == '修改用户'">
+              <el-input v-model="form.collectSongIds"></el-input>
+            </el-form-item>
             <el-form-item label="爱好风格" prop="hobby">
-              <el-radio v-model="form.hobby" label="中国风" size="small">中国风</el-radio>
-              <el-radio v-model="form.hobby" label="流行音乐" size="small">流行音乐</el-radio>
-              <el-radio v-model="form.hobby" label="怀旧老歌" size="small">怀旧老歌</el-radio>
-              <el-radio v-model="form.hobby" label="粤语" size="small">粤语</el-radio>
-              <el-radio v-model="form.hobby" label="情歌" size="small">情歌</el-radio>
+              <el-checkbox-group v-model="form.hobby">
+                <el-checkbox label="中国风" name="hobby"></el-checkbox>
+                <el-checkbox label="流行音乐" name="hobby"></el-checkbox>
+                <el-checkbox label="抖音神曲" name="hobby"></el-checkbox>
+                <el-checkbox label="经典老歌" name="hobby"></el-checkbox>
+                <el-checkbox label="伤感" name="hobby"></el-checkbox>
+                <el-checkbox label="快乐" name="hobby"></el-checkbox>
+                <el-checkbox label="安静" name="hobby"></el-checkbox>
+                <el-checkbox label="励志" name="hobby"></el-checkbox>
+                <el-checkbox label="治愈" name="hobby"></el-checkbox>
+                <el-checkbox label="怀恋" name="hobby"></el-checkbox>
+                <el-checkbox label="2000年后" name="hobby"></el-checkbox>
+                <el-checkbox label="2000年前" name="hobby"></el-checkbox>
+              </el-checkbox-group>
             </el-form-item>
             <el-form-item label="出生日期" prop="birth">
               <el-date-picker
@@ -140,7 +198,10 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit('form')">确认</el-button>
+              <el-button type="primary" @click="onSubmit('form')"
+              >确认
+              </el-button
+              >
               <el-button @click="onCancel('form')">取消</el-button>
             </el-form-item>
           </el-form>
@@ -185,39 +246,28 @@ export default {
       form: {
         account: "",
         birth: "",
-        hobby: '中国风',
+        hobby: ["中国风", "流行音乐"],
         introduce: "",
         name: "",
         password: "123",
         sex: "女",
-        photo: '',
-        collect:''
+        photo: "",
+        collectSingerIds: "",
+        collectSongIds: "",
       },
       rules: {
-        account: [
-          {required: true, message: '请输入账号', trigger: 'blur'},
-        ],
-        password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-        ],
-        name: [
-          {required: true, message: '请输入名称', trigger: 'blur'},
-        ],
-        sex: [
-          {required: true, message: '请选择性别', trigger: 'blur'},
-        ],
-        introduce: [
-          {required: true, message: '请输入内容', trigger: 'blur'},
-        ],
-        hobby: [
-          {required: true, message: '请选择爱好', trigger: 'blur'},
-        ],
-        birth: [
-          {required: true, message: '选择日期', trigger: 'blur'},
-        ]
+        account: [{required: true, message: "请输入账号", trigger: "blur"},
+          {validator: this.checkAccount, trigger: ['change','blur']}],
+        password: [{required: true, message: "请输入密码", trigger: "blur"}],
+        name: [{required: true, message: "请输入名称", trigger: "blur"}],
+        sex: [{required: true, message: "请选择性别", trigger: "blur"}],
+        introduce: [{required: true, message: "请输入内容", trigger: "blur"}],
+        hobby: [{required: true, message: "请选择爱好", trigger: "blur"}],
+        birth: [{required: true, message: "选择日期", trigger: "blur"}],
       },
-      uploadImg: require('../../../assets/upload.png')
-    }
+      uploadImg: require("../../../assets/upload.png"),
+      loading: true,
+    };
   },
   methods: {
     //数据
@@ -229,8 +279,13 @@ export default {
           })
           .then((res) => {
             if (res.data.code == 200) {
+              res.data.data.map((item) => {
+                var newHobby = JSON.parse(item.hobby);
+                item.hobby = newHobby;
+              });
               this.tableData = res.data.data;
               this.filTableData = res.data.data;
+              this.loading = false;
             }
           });
     },
@@ -244,17 +299,18 @@ export default {
     addUser() {
       this.showDialog = true;
       this.title = "新增用户";
-      this.form={
+      this.form = {
         account: "",
         birth: "",
-        hobby: '中国风',
+        hobby: ["中国风", "流行音乐"],
         introduce: "",
         name: "",
         password: "123",
         sex: "女",
-        photo: '',
-        collect:''
-      }
+        photo: "",
+        collectSingerIds: "",
+        collectSongIds: "",
+      };
     },
     //编辑
     editUser(row) {
@@ -264,33 +320,39 @@ export default {
     },
     //上传获取row
     uploadClick(row) {
-      this.form = row
+      this.form = row;
     },
     //上传图片
     uploadPhoto(param) {
       this.$refs.uploadPhoto.clearFiles(); //上传成功之后清除历史记录
-      if (param.file.name.split('.')[1] !== 'png' && param.file.name.split('.')[1] !== 'jpg') {
+      if (
+          param.file.name.split(".")[1] !== "png" &&
+          param.file.name.split(".")[1] !== "jpg"
+      ) {
         ElMessage({
-          message: '上传格式错误，不是.jpg格式或.png格式',
+          message: "上传格式错误，不是.jpg格式或.png格式",
           type: "error",
         });
-        return
+        return;
       }
       const p = new Promise((resolve) => {
-        let formData = new FormData()
-        formData.append('file', param.file)
-        request.request({
-          method: 'post',
-          url: '/api/uploadFile',
-          data: formData,
-        }).then(res => {
-          if (res.data.code == 200) {
-            this.form.photo = res.data.data.url
-            resolve(this.form)
-          }
-        })
-      })
-      p.then(form => {
+        let formData = new FormData();
+        formData.append("file", param.file);
+        request
+            .request({
+              method: "post",
+              url: "/api/uploadFile",
+              data: formData,
+            })
+            .then((res) => {
+              if (res.data.code == 200) {
+                this.form.photo = res.data.data.url;
+                this.form.hobby = JSON.stringify(this.form.hobby);
+                resolve(this.form);
+              }
+            });
+      });
+      p.then((form) => {
         request
             .request({
               method: "post",
@@ -316,10 +378,11 @@ export default {
                 });
               }
             });
-      })
+      });
     },
     //确认
     onSubmit(form) {
+      this.form.hobby = JSON.stringify(this.form.hobby);
       this.$refs[form].validate((valid) => {
         if (valid) {
           this.form.birth = dateFormat("YYYY-mm-dd", this.form.birth);
@@ -372,9 +435,9 @@ export default {
                 });
           }
         } else {
-          return false
+          return false;
         }
-      })
+      });
     },
     //取消
     onCancel(form) {
@@ -390,15 +453,11 @@ export default {
     },
     //删除
     deleteUser(row) {
-      ElMessageBox.confirm(
-          '确认删除',
-          'Warning',
-          {
-            confirmButtonText: '确认',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
+      ElMessageBox.confirm("确认删除", "Warning", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
           .then(() => {
             const {userId} = row;
             if (userId) {
@@ -435,10 +494,10 @@ export default {
           })
           .catch(() => {
             ElMessage({
-              type: 'info',
-              message: '取消删除',
-            })
-          })
+              type: "info",
+              message: "取消删除",
+            });
+          });
     },
     //  val表示当前页大小
     handleSizeChange(val) {
@@ -448,9 +507,34 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
     },
+    //校验账号
+    checkAccount(rule, value, callback) {
+      new Promise(resolve => {
+        request
+            .request({
+              method: "get",
+              url: "/api/user/getUser",
+            })
+            .then((res) => {
+              if (res.data.code == 200) {
+                resolve(res.data.data)
+              }
+            });
+      }).then(res => {
+        var hasAccount = res.some(item => {
+          return item.account == value
+        })
+        if(hasAccount){
+          callback(new Error('该账号已经被注册，请重新更换账号'))
+        }else {
+          callback()
+        }
+      })
+    },
   },
   mounted() {
     this.getDataSource();
+    console.log("user表数据", this.filTableData);
   },
   watch: {
     //输入框为空
@@ -478,9 +562,9 @@ export default {
 
 .table {
   width: 96%;
-  height: 492px;
+  height: 485px;
   margin-left: 2%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .demo-pagination-block {
@@ -497,5 +581,17 @@ export default {
 
 .showOverTooltip:hover {
   cursor: pointer;
+}
+
+.elTable th {
+  padding: 0 !important;
+  height: 20px !important;
+  line-height: 20px;
+}
+
+.elTable td {
+  padding: 0 !important;
+  height: 20px;
+  line-height: 20px;
 }
 </style>
