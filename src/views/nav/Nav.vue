@@ -65,7 +65,7 @@ export default {
 <style scoped lang="scss">
 .nav {
   width: 250px;
-  min-height: 695px;
+  min-height: 740px;
   box-shadow: 5px 5px 5px rgb(211, 211, 211);
   box-sizing: border-box;
   background-color: white;

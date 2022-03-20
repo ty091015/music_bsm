@@ -45,9 +45,9 @@
                 ref="uploadPhoto"
                 :http-request="uploadPhoto"
               >
-                <img style="height: 28px" :src="uploadImg" alt="找不到" />
+                <img style="height: 14px" :src="uploadImg" alt="找不到" />
                 <img
-                  style="width: 100%"
+                  style="width: 40px"
                   :src="scope.row.photo"
                   class="avatar"
                 />
@@ -635,12 +635,11 @@ export default {
   margin-top: 15px;
   margin-bottom: 10px;
   margin-left: 2%;
-  margin-top: 1%;
 }
 
 .table {
   width: 96%;
-  height: 485px;
+  height: 530px;
   margin-left: 2%;
   overflow: auto;
 }

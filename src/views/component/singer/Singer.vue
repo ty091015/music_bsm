@@ -4,12 +4,12 @@
     <div class="search">
       <span>歌手名称</span>&nbsp;
       <el-input
-        v-model="search"
-        style="width: 200px"
-        placeholder="请输入歌手名"
+          v-model="search"
+          style="width: 200px"
+          placeholder="请输入歌手名"
       />
       <el-button @click="handleSearch" style="margin-left: 10px"
-        >搜索
+      >搜索
       </el-button>
       <el-button @click="addSinger" type="primary">新增歌手</el-button>
       <el-button @click="deleteSinger" type="danger">批量删除</el-button>
@@ -17,76 +17,74 @@
     <!--  表格数据  -->
     <div class="table">
       <el-table
-        v-loading="loading"
-        :cell-style="{ textAlign: 'center' }"
-        :header-cell-style="{ textAlign: 'center' }"
-        border
-        size="small"
-        :data="
+          v-loading="loading"
+          :cell-style="{ textAlign: 'center' }"
+          :header-cell-style="{ textAlign: 'center' }"
+          border
+          size="small"
+          :data="
           this.filTableData.slice(
             (currentPage - 1) * pageSize,
             currentPage * pageSize
           )
         "
-        style="width: 100%"
-        @selection-change="SelectionChange"
+          style="width: 100%"
+          @selection-change="SelectionChange"
       >
-        <el-table-column type="selection" width="40" />
-        <el-table-column label="歌手头像" width="100">
+        <el-table-column type="selection" width="40"/>
+        <el-table-column label="歌手头像" width="80">
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
               <el-upload
-                class="avatar-uploader"
-                action="/api/uploadFile"
-                :show-file-list="false"
-                :limit="1"
-                ref="uploadPhoto"
-                :http-request="uploadPhoto"
+                  class="avatar-uploader"
+                  action="/api/uploadFile"
+                  :show-file-list="false"
+                  :limit="1"
+                  ref="uploadPhoto"
+                  :http-request="uploadPhoto"
               >
-                <div style="width: 38px; overflow: hidden">
-                  <img style="height: 28px" :src="uploadImg" alt="找不到" />
-                  <img
-                    style="width: 35px"
+                <img style="height: 14px" :src="uploadImg" alt="找不到"/>
+                <img
+                    style="width: 40px"
                     :src="scope.row.photo"
                     class="avatar"
-                  />
-                </div>
+                />
               </el-upload>
             </el-icon>
           </template>
         </el-table-column>
-        <el-table-column fixed prop="singerId" label="singerId" width="70" />
+        <el-table-column fixed prop="singerId" label="singerId" width="70"/>
         <el-table-column
-          prop="name"
-          label="歌手姓名"
-          width="100"
-          show-overflow-tooltip
+            prop="name"
+            label="歌手姓名"
+            width="100"
+            show-overflow-tooltip
         >
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="sex" label="性别" width="63" />
+        <el-table-column prop="sex" label="性别" width="63"/>
         <el-table-column label="歌手简介" width="250" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
         </el-table-column>
         <el-table-column
-          prop="type"
-          label="歌手风格"
-          width="250"
-          show-overflow-tooltip
+            prop="type"
+            label="歌手风格"
+            width="250"
+            show-overflow-tooltip
         >
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.type }}</span>
           </template>
         </el-table-column>
         <el-table-column
-          prop="birth"
-          label="出生日期"
-          width="85"
-          show-overflow-tooltip
+            prop="birth"
+            label="出生日期"
+            width="85"
+            show-overflow-tooltip
         >
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.birth }}</span>
@@ -105,13 +103,13 @@
         <el-table-column label="操作" width="150">
           <template #default="scope">
             <el-button type="text" size="small" @click="editSinger(scope.row)"
-              >编辑
+            >编辑
             </el-button>
             <el-button
-              type="danger"
-              size="small"
-              @click="deleteSinger(scope.row)"
-              >删除
+                type="danger"
+                size="small"
+                @click="deleteSinger(scope.row)"
+            >删除
             </el-button>
           </template>
         </el-table-column>
@@ -150,15 +148,16 @@
             </el-form-item>
             <el-form-item label="出生日期" prop="birth">
               <el-date-picker
-                v-model="form.birth"
-                type="date"
-                placeholder="选择日期"
+                  v-model="form.birth"
+                  type="date"
+                  placeholder="选择日期"
               >
               </el-date-picker>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit('form')"
-                >确认</el-button
+              >确认
+              </el-button
               >
               <el-button @click="onCancel('form')">取消</el-button>
             </el-form-item>
@@ -169,13 +168,13 @@
     <!-- 分页 -->
     <div class="demo-pagination-block">
       <el-pagination
-        :v-model:currentPage="currentPage"
-        :page-sizes="pageSizes"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="this.filTableData.length"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
+          :v-model:currentPage="currentPage"
+          :page-sizes="pageSizes"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="this.filTableData.length"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
       >
       </el-pagination>
     </div>
@@ -184,8 +183,8 @@
 
 <script>
 import request from "../../../utils/request";
-import { dateFormat } from "../../../utils/dateFormat";
-import { ElMessage, ElMessageBox } from "element-plus";
+import {dateFormat} from "../../../utils/dateFormat";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
   name: "Singer",
@@ -210,37 +209,38 @@ export default {
         sex: "女",
       },
       rules: {
-        name: [{ required: true, message: "请输入歌手名", trigger: "blur" },
-          {validator: this.checkSingerName, trigger: ['change','blur']}],
-        sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
-        introduce: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        type: [{ required: true, message: "请选择爱好", trigger: "blur" }],
-        birth: [{ required: true, message: "选择日期", trigger: "blur" }],
+        name: [{required: true, message: "请输入歌手名", trigger: "blur"},
+          {validator: this.checkSingerName, trigger: ['change', 'blur']}],
+        sex: [{required: true, message: "请选择性别", trigger: "blur"}],
+        introduce: [{required: true, message: "请输入内容", trigger: "blur"}],
+        type: [{required: true, message: "请选择爱好", trigger: "blur"}],
+        birth: [{required: true, message: "选择日期", trigger: "blur"}],
       },
       uploadImg: require("../../../assets/upload.png"),
       loading: true,
+      editSingerName: ''
     };
   },
   methods: {
     //数据
     getDataSource() {
       request
-        .request({
-          method: "get",
-          url: "/api/singer/getSinger",
-        })
-        .then((res) => {
-          if (res.data.code == 200) {
-            res.data.data.map((item) => {
-              var newType = JSON.parse(item.type);
-              item.type = newType;
-            });
-            this.tableData = res.data.data;
-            this.filTableData = res.data.data;
-            this.loading = false;
-            console.log("singer表数据", this.filTableData);
-          }
-        });
+          .request({
+            method: "get",
+            url: "/api/singer/getSinger",
+          })
+          .then((res) => {
+            if (res.data.code == 200) {
+              res.data.data.map((item) => {
+                var newType = JSON.parse(item.type);
+                item.type = newType;
+              });
+              this.tableData = res.data.data;
+              this.filTableData = res.data.data;
+              this.loading = false;
+              console.log("singer表数据", this.filTableData);
+            }
+          });
     },
     //查询
     handleSearch() {
@@ -264,8 +264,9 @@ export default {
     //编辑
     editSinger(row) {
       this.showDialog = true;
-      this.title = "修改用户";
+      this.title = "修改歌手";
       this.form = row;
+      this.editSingerName = row.name
     },
     //上传获取row
     uploadClick(row) {
@@ -276,8 +277,8 @@ export default {
     uploadPhoto(param) {
       this.$refs.uploadPhoto.clearFiles(); //上传成功之后清除历史记录
       if (
-        param.file.name.split(".")[1] !== "png" &&
-        param.file.name.split(".")[1] !== "jpg"
+          param.file.name.split(".")[1] !== "png" &&
+          param.file.name.split(".")[1] !== "jpg"
       ) {
         ElMessage({
           message: "上传格式错误，不是.jpg格式或.png格式",
@@ -289,45 +290,45 @@ export default {
         let formData = new FormData();
         formData.append("file", param.file);
         request
-          .request({
-            method: "post",
-            url: "/api/uploadFile",
-            data: formData,
-          })
-          .then((res) => {
-            if (res.data.code == 200) {
-              this.form.photo = res.data.data.url;
-              this.form.type = JSON.stringify(this.form.type);
-              resolve(this.form);
-            }
-          });
+            .request({
+              method: "post",
+              url: "/api/uploadFile",
+              data: formData,
+            })
+            .then((res) => {
+              if (res.data.code == 200) {
+                this.form.photo = res.data.data.url;
+                this.form.type = JSON.stringify(this.form.type);
+                resolve(this.form);
+              }
+            });
       });
       p.then((form) => {
         request
-          .request({
-            method: "post",
-            url: "/api/singer/add_edit",
-            data: form,
-            params: {
-              singerId: this.form.singerId,
-            },
-          })
-          .then((res) => {
-            if (res.data.code == 200) {
-              this.showDialog = false;
-              this.getDataSource();
-              this.form = {};
-              ElMessage({
-                message: res.data.msg,
-                type: "success",
-              });
-            } else {
-              ElMessage({
-                message: res.data.msg,
-                type: "error",
-              });
-            }
-          });
+            .request({
+              method: "post",
+              url: "/api/singer/add_edit",
+              data: form,
+              params: {
+                singerId: this.form.singerId,
+              },
+            })
+            .then((res) => {
+              if (res.data.code == 200) {
+                this.showDialog = false;
+                this.getDataSource();
+                this.form = {};
+                ElMessage({
+                  message: res.data.msg,
+                  type: "success",
+                });
+              } else {
+                ElMessage({
+                  message: res.data.msg,
+                  type: "error",
+                });
+              }
+            });
       });
     },
     //确认
@@ -338,51 +339,51 @@ export default {
           this.form.birth = dateFormat("YYYY-mm-dd", this.form.birth);
           if (this.form.singerId) {
             request
-              .request({
-                method: "post",
-                url: "/api/singer/add_edit",
-                data: this.form,
-                params: {
-                  singerId: this.form.singerId,
-                },
-              })
-              .then((res) => {
-                if (res.data.code == 200) {
-                  this.showDialog = false;
-                  this.getDataSource();
-                  ElMessage({
-                    message: res.data.msg,
-                    type: "success",
-                  });
-                } else {
-                  ElMessage({
-                    message: res.data.msg,
-                    type: "error",
-                  });
-                }
-              });
+                .request({
+                  method: "post",
+                  url: "/api/singer/add_edit",
+                  data: this.form,
+                  params: {
+                    singerId: this.form.singerId,
+                  },
+                })
+                .then((res) => {
+                  if (res.data.code == 200) {
+                    this.showDialog = false;
+                    this.getDataSource();
+                    ElMessage({
+                      message: res.data.msg,
+                      type: "success",
+                    });
+                  } else {
+                    ElMessage({
+                      message: res.data.msg,
+                      type: "error",
+                    });
+                  }
+                });
           } else {
             request
-              .request({
-                method: "post",
-                url: "/api/singer/add_edit",
-                data: this.form,
-              })
-              .then((res) => {
-                if (res.data.code == 200) {
-                  this.getDataSource();
-                  this.showDialog = false;
-                  ElMessage({
-                    message: res.data.msg,
-                    type: "success",
-                  });
-                } else {
-                  ElMessage({
-                    message: res.data.msg,
-                    type: "error",
-                  });
-                }
-              });
+                .request({
+                  method: "post",
+                  url: "/api/singer/add_edit",
+                  data: this.form,
+                })
+                .then((res) => {
+                  if (res.data.code == 200) {
+                    this.getDataSource();
+                    this.showDialog = false;
+                    ElMessage({
+                      message: res.data.msg,
+                      type: "success",
+                    });
+                  } else {
+                    ElMessage({
+                      message: res.data.msg,
+                      type: "error",
+                    });
+                  }
+                });
           }
         } else {
           return 0;
@@ -408,46 +409,46 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       })
-        .then(() => {
-          const { userId } = row;
-          if (userId) {
-            this.Selection = [userId];
-          }
-          const p = new Promise((resolve, reject) => {
-            this.Selection.map((userId) => {
-              request
-                .request({
-                  method: "get",
-                  url: "/api/singer/deleteSinger",
-                  params: {
-                    userId,
-                  },
-                })
-                .then((res) => {
-                  if (res.data.code == 200) {
-                    this.getDataSource();
-                    resolve(true);
-                  } else {
-                    reject(false);
-                  }
+          .then(() => {
+            const {userId} = row;
+            if (userId) {
+              this.Selection = [userId];
+            }
+            const p = new Promise((resolve, reject) => {
+              this.Selection.map((userId) => {
+                request
+                    .request({
+                      method: "get",
+                      url: "/api/singer/deleteSinger",
+                      params: {
+                        userId,
+                      },
+                    })
+                    .then((res) => {
+                      if (res.data.code == 200) {
+                        this.getDataSource();
+                        resolve(true);
+                      } else {
+                        reject(false);
+                      }
+                    });
+              });
+            });
+            p.then((value) => {
+              if (value) {
+                ElMessage({
+                  message: "删除成功",
+                  type: "success",
                 });
+              }
+            });
+          })
+          .catch(() => {
+            ElMessage({
+              type: "info",
+              message: "取消删除",
             });
           });
-          p.then((value) => {
-            if (value) {
-              ElMessage({
-                message: "删除成功",
-                type: "success",
-              });
-            }
-          });
-        })
-        .catch(() => {
-          ElMessage({
-            type: "info",
-            message: "取消删除",
-          });
-        });
     },
     //  val表示当前页大小
     handleSizeChange(val) {
@@ -458,7 +459,7 @@ export default {
       this.currentPage = val;
     },
     //校验新建歌手名
-    checkSingerName(rule, value, callback){
+    checkSingerName(rule, value, callback) {
       new Promise(resolve => {
         request
             .request({
@@ -471,12 +472,18 @@ export default {
               }
             });
       }).then(res => {
-        var hasAccount = res.some(item => {
+        var result = res
+        if (this.title == '修改歌手') {
+          result = res.filter((item) => {
+            return item.name != this.editSingerName
+          })
+        }
+        var hasAccount = result.some(item => {
           return item.name == value
         })
-        if(hasAccount){
+        if (hasAccount) {
           callback(new Error('该歌手已经存在'))
-        }else {
+        } else {
           callback()
         }
       })
@@ -507,12 +514,11 @@ export default {
   margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 2%;
-  margin-top: 1%;
 }
 
 .table {
   width: 96%;
-  height: 485px;
+  height: 530px;
   margin-left: 2%;
   overflow: auto;
 }

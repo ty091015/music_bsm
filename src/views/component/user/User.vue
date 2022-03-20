@@ -49,7 +49,7 @@
                   ref="uploadPhoto"
                   :http-request="uploadPhoto"
               >
-                <img style="width: 28px" :src="uploadImg" alt="找不到"/>
+                <img style="width: 14px" :src="uploadImg" alt="找不到"/>
                 <img style="width: 40px" :src="scope.row.photo"/>
               </el-upload>
             </el-icon>
@@ -148,7 +148,7 @@
     </div>
     <!--  模态框  -->
     <div class="modal">
-      <el-dialog v-model="showDialog" :title="title" width="40%" center>
+      <el-dialog v-model="showDialog" :title="title" width="40%" center @close='closeDialog'>
         <div class="content">
           <el-form ref="form" :model="form" label-width="120px" :rules="rules">
             <el-form-item label="账号" prop="account">
@@ -234,8 +234,8 @@ export default {
   data() {
     return {
       currentPage: 1, //当前页码
-      pageSizes: [8, 16, 24, 32], //页码格式
-      pageSize: 8, //页码大小
+      pageSizes: [10, 20, 30, 40], //页码格式
+      pageSize: 10, //页码大小
       search: "",
       tableData: [],
       filTableData: [],
@@ -257,7 +257,7 @@ export default {
       },
       rules: {
         account: [{required: true, message: "请输入账号", trigger: "blur"},
-          {validator: this.checkAccount, trigger: ['change','blur']}],
+          {validator: this.checkAccount, trigger: ['change', 'blur']}],
         password: [{required: true, message: "请输入密码", trigger: "blur"}],
         name: [{required: true, message: "请输入名称", trigger: "blur"}],
         sex: [{required: true, message: "请选择性别", trigger: "blur"}],
@@ -267,6 +267,7 @@ export default {
       },
       uploadImg: require("../../../assets/upload.png"),
       loading: true,
+      editAccount: ''
     };
   },
   methods: {
@@ -317,6 +318,7 @@ export default {
       this.showDialog = true;
       this.title = "修改用户";
       this.form = row;
+      this.editAccount = row.account
     },
     //上传获取row
     uploadClick(row) {
@@ -445,6 +447,12 @@ export default {
       this.getDataSource();
       this.$refs[form].resetFields();
     },
+    //关闭弹框
+    closeDialog() {
+      this.showDialog = false;
+      this.getDataSource();
+      this.$refs.form.resetFields();
+    },
     //选择框改变
     SelectionChange(value) {
       this.Selection = value.map((item) => {
@@ -521,12 +529,18 @@ export default {
               }
             });
       }).then(res => {
-        var hasAccount = res.some(item => {
+        var result = res
+        if (this.title == '修改用户') {
+          result = res.filter((item) => {
+            return item.account != this.editAccount
+          })
+        }
+        var hasAccount = result.some(item => {
           return item.account == value
         })
-        if(hasAccount){
+        if (hasAccount) {
           callback(new Error('该账号已经被注册，请重新更换账号'))
-        }else {
+        } else {
           callback()
         }
       })
@@ -562,9 +576,9 @@ export default {
 
 .table {
   width: 96%;
-  height: 485px;
+  height: 530px;
   margin-left: 2%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .demo-pagination-block {
