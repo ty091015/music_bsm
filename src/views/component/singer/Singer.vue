@@ -511,14 +511,14 @@ export default {
 }
 
 .search {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 2%;
 }
 
 .table {
   width: 96%;
-  height: 530px;
+  height: 510px;
   margin-left: 2%;
   overflow: auto;
 }

@@ -568,10 +568,9 @@ export default {
 }
 
 .search {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 2%;
-  margin-top: 1%;
 }
 
 .table {
@@ -582,7 +581,7 @@ export default {
 }
 
 .demo-pagination-block {
-  margin-left: 2%;
+  margin-left: 30px;
 }
 
 .showOverTooltip {

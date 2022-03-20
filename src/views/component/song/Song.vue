@@ -632,7 +632,7 @@ export default {
 }
 
 .search {
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 2%;
 }
