@@ -97,7 +97,7 @@
                 ref="uploadLrc"
                 :http-request="uploadLrc"
               >
-                <img style="height: 30px" :src="uploadImg" alt="找不到" />
+                <img style="height: 14px" :src="uploadImg" alt="找不到" />
                 <span style="display: inline-block" class="showOverTooltip">{{
                   scope.row.lyric
                 }}</span>
@@ -121,7 +121,7 @@
                 ref="uploadMusic"
                 :http-request="uploadMusic"
               >
-                <img style="height: 30px" :src="uploadImg" alt="找不到" />
+                <img style="height: 14px" :src="uploadImg" alt="找不到" />
                 <span style="display: inline-block" class="showOverTooltip">{{
                   scope.row.url
                 }}</span>
