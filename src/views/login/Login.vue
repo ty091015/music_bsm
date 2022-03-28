@@ -2,6 +2,10 @@
   <div class="login">
     <img class="bg" ref="img" :src="bg" alt/>
     <div id="form">
+      <div>
+        <p style="font-size: 40px;font-weight: bold;margin-top: -30px;margin-bottom: 80px">基于VUE的音乐类APP的设计与实现</p>
+        <p style="font-size: 30px;font-weight: bold;margin-top: -50px;margin-bottom: 50px;margin-left: 230px">后台管理系统</p>
+      </div>
       <form>
         <tr>
           <td> 账号：</td>
@@ -79,6 +83,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+tr{
+  margin-top: 10px;
 }
 
 .bg {

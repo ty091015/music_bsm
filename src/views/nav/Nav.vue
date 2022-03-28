@@ -55,7 +55,7 @@ export default {
       this.$refs.nav.style.width = "100px";
     },
     expand() {
-      this.$refs.nav.style.width = "250px";
+      this.$refs.nav.style.width = "200px";
     },
   },
 };
@@ -64,8 +64,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .nav {
-  width: 250px;
-  min-height: 740px;
+  width: 200px;
+  height: 845px;
   box-shadow: 5px 5px 5px rgb(211, 211, 211);
   box-sizing: border-box;
   background-color: white;

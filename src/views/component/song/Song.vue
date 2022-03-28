@@ -34,7 +34,7 @@
         @selection-change="SelectionChange"
       >
         <el-table-column type="selection" width="40" />
-        <el-table-column label="图片" width="60">
+        <el-table-column label="图片" width="60" style="width: 30px;overflow: hidden">
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
               <el-upload
@@ -47,7 +47,7 @@
               >
                 <img style="height: 14px" :src="uploadImg" alt="找不到" />
                 <img
-                  style="width: 40px"
+                  style="width: 40px;margin-top: 30px"
                   :src="scope.row.photo"
                   class="avatar"
                 />
@@ -66,17 +66,17 @@
             {{ scope.row.singer.name }}
           </template>
         </el-table-column>
-        <el-table-column label="所属专辑" width="100" show-overflow-tooltip>
+        <el-table-column label="所属专辑" width="120" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.album }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲简介" width="140" show-overflow-tooltip>
+        <el-table-column label="歌曲简介" width="200" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.introduce }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲类型" width="140" show-overflow-tooltip>
+        <el-table-column label="歌曲类型" width="200" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.type }}</p>
           </template>
@@ -560,18 +560,19 @@ export default {
         type: "warning",
       })
         .then(() => {
-          const { userId } = row;
-          if (userId) {
-            this.Selection = [userId];
+          const { songId } = row;
+          if (songId) {
+            this.Selection = [songId];
           }
           const p = new Promise((resolve, reject) => {
-            this.Selection.map((userId) => {
+            this.Selection.map((songId) => {
+              console.log(songId)
               request
                 .request({
                   method: "get",
                   url: "/api/song/deleteSong",
                   params: {
-                    userId,
+                    songId,
                   },
                 })
                 .then((res) => {
@@ -627,7 +628,7 @@ export default {
 
 <style scoped lang="less">
 .song {
-  width: 99%;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -638,8 +639,8 @@ export default {
 }
 
 .table {
-  width: 96%;
-  height: 530px;
+  width: 100%;
+  min-height: 500px;
   margin-left: 2%;
   overflow: auto;
 }

@@ -26,10 +26,10 @@ export default {
 }
 .content {
   width: 96%;
-  height: 620px;
+  min-height: 600px;
   background-color: white;
   margin-left: 2%;
-  margin-top: 20px;
+  margin-top: 25px;
   box-shadow: 0px 0px 5px #c5c4c4;
 }
 </style>

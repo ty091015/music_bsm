@@ -50,7 +50,7 @@
                   :http-request="uploadPhoto"
               >
                 <img style="width: 14px" :src="uploadImg" alt="找不到"/>
-                <img style="width: 40px" :src="scope.row.photo"/>
+                <img style="height: 50px" :src="scope.row.photo"/>
               </el-upload>
             </el-icon>
           </template>
@@ -79,7 +79,7 @@
         <el-table-column
             prop="name"
             label="别名"
-            width="115"
+            width="130"
             show-overflow-tooltip
         >
           <template #default="scope">
@@ -87,19 +87,19 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="50"/>
-        <el-table-column label="收藏歌手" width="100" show-overflow-tooltip>
+        <el-table-column label="收藏歌手" width="120" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{
                 scope.row.collectSingerIds
               }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="收藏歌曲" width="100" show-overflow-tooltip>
+        <el-table-column label="收藏歌曲" width="120" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.collectSongIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="介绍" width="100" show-overflow-tooltip>
+        <el-table-column label="介绍" width="140" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
@@ -107,7 +107,7 @@
         <el-table-column
             prop="hobby"
             label="爱好"
-            width="103"
+            width="130"
             show-overflow-tooltip
         >
           <template #default="scope">
@@ -574,8 +574,8 @@ export default {
 }
 
 .table {
-  width: 96%;
-  height: 530px;
+  width: 100%;
+  min-height: 500px;
   margin-left: 2%;
   overflow: auto;
 }

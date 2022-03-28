@@ -45,7 +45,7 @@
               >
                 <img style="height: 14px" :src="uploadImg" alt="找不到"/>
                 <img
-                    style="width: 40px"
+                    style="width: 40px;margin-top: 30px"
                     :src="scope.row.photo"
                     class="avatar"
                 />
@@ -65,7 +65,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="63"/>
-        <el-table-column label="歌手简介" width="250" show-overflow-tooltip>
+        <el-table-column label="歌手简介" width="400" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
@@ -410,18 +410,19 @@ export default {
         type: "warning",
       })
           .then(() => {
-            const {userId} = row;
-            if (userId) {
-              this.Selection = [userId];
+            console.log(row)
+            const {singerId} = row;
+            if (singerId) {
+              this.Selection = [singerId];
             }
             const p = new Promise((resolve, reject) => {
-              this.Selection.map((userId) => {
+              this.Selection.map((singerId) => {
                 request
                     .request({
                       method: "get",
                       url: "/api/singer/deleteSinger",
                       params: {
-                        userId,
+                        singerId,
                       },
                     })
                     .then((res) => {
@@ -517,8 +518,8 @@ export default {
 }
 
 .table {
-  width: 96%;
-  height: 510px;
+  width: 100%;
+  min-height: 500px;
   margin-left: 2%;
   overflow: auto;
 }
