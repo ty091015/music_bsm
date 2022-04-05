@@ -87,19 +87,22 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="50"/>
-        <el-table-column label="收藏歌手" width="120" show-overflow-tooltip>
+        <el-table-column label="收藏歌手" width="105" show-overflow-tooltip>
           <template #default="scope">
-            <span class="showOverTooltip">{{
-                scope.row.collectSingerIds
-              }}</span>
+            <span class="showOverTooltip">{{ scope.row.collectSingerIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="收藏歌曲" width="120" show-overflow-tooltip>
+        <el-table-column label="收藏歌曲" width="105" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.collectSongIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="介绍" width="140" show-overflow-tooltip>
+        <el-table-column label="历史播放" width="105" show-overflow-tooltip>
+          <template #default="scope">
+            <span class="showOverTooltip">{{ scope.row.historySongIds }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="介绍" width="110" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
@@ -150,7 +153,7 @@
     <div class="modal">
       <el-dialog v-model="showDialog" :title="title" width="40%" center @close='closeDialog'>
         <div class="content">
-          <el-form ref="form" :model="form" label-width="120px" :rules="rules">
+          <el-form ref="form" :model="form" label-position="left" label-width="100px" :rules="rules">
             <el-form-item label="账号" prop="account">
               <el-input v-model="form.account"></el-input>
             </el-form-item>
@@ -172,6 +175,9 @@
             </el-form-item>
             <el-form-item label="收藏歌曲" v-show="title == '修改用户'">
               <el-input v-model="form.collectSongIds"></el-input>
+            </el-form-item>
+            <el-form-item label="历史播放" v-show="title == '修改用户'">
+              <el-input v-model="form.historySongIds"></el-input>
             </el-form-item>
             <el-form-item label="爱好风格" prop="hobby">
               <el-checkbox-group v-model="form.hobby">
@@ -254,6 +260,7 @@ export default {
         photo: "",
         collectSingerIds: "",
         collectSongIds: "",
+        historySongIds: ""
       },
       rules: {
         account: [{required: true, message: "请输入账号", trigger: "blur"},
@@ -311,6 +318,7 @@ export default {
         photo: "",
         collectSingerIds: "",
         collectSongIds: "",
+        historySongIds: ''
       };
     },
     //编辑
@@ -606,5 +614,9 @@ export default {
   padding: 0 !important;
   height: 20px;
   line-height: 20px;
+}
+/deep/ .el-dialog {
+  height: 78vh;
+  overflow: auto;
 }
 </style>
