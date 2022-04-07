@@ -26,7 +26,7 @@ export default {
 }
 .content {
   width: 96%;
-  min-height: 600px;
+  min-height: 750px;
   background-color: white;
   margin-left: 2%;
   margin-top: 25px;

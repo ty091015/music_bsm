@@ -50,7 +50,7 @@
                   :http-request="uploadPhoto"
               >
                 <img style="width: 14px" :src="uploadImg" alt="找不到"/>
-                <img style="height: 50px" :src="scope.row.photo"/>
+                <img style="width: 60px" :src="scope.row.photo"/>
               </el-upload>
             </el-icon>
           </template>

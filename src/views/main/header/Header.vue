@@ -10,12 +10,10 @@
       </div>
     </div>
     <div class="header_list">
-      <el-dropdown>
-        <span class="pullDown">
+      <el-dropdown class="pullDown">
           <el-icon :size="16" color="white">
             <arrow-down-bold />
           </el-icon>
-        </span>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="logOut">退出登录</el-dropdown-item>
@@ -56,7 +54,7 @@ export default {
   position: relative;
   top: 0%;
   left: 0%;
-  height: 80px;
+  height: 110px;
   width: 100%;
   background-color: rgb(54, 83, 148);
   box-shadow: 0px 5px 3px rgb(211, 204, 204);
@@ -75,25 +73,21 @@ export default {
 }
 .header_photo {
   position: absolute;
-  margin-left: 20px;
-  right: 12%;
+  right: 8%;
 }
 .header_list {
   position: absolute;
   margin-left: 20px;
-  right: 7%;
+  right: 5%;
 }
 .photo img {
-  width: 50px;
-  height: 50px;
+  width: 80px;
   border-radius: 50%;
-  margin-top: 25%;
+  margin-top: 20%;
   background-color: white;
 }
 .pullDown {
-  position: absolute;
-  left: -50px;
-  margin-top: 0px;
+  margin-top: 20px;
 }
 .pullDown:hover{
   cursor: pointer;

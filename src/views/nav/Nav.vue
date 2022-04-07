@@ -1,14 +1,15 @@
 <template>
   <div class="nav" ref="nav">
     <div class="logo">
-      <img style="width: 50px;border-radius: 20%;margin-top: 25px" src='../../assets/photo/photo1.jpg'/>
+      <img style="width: 80px;border-radius: 20%;margin-top: 25px" src='../../assets/photo/photo1.jpg'/>
     </div>
-    <el-radio-group v-model="isCollapse" class="expand">
-      <el-radio-button style="width: 100%" v-if="isCollapse" :label="false" @click="expand">展开</el-radio-button>
-      <el-radio-button style="width: 100%" v-if="!isCollapse" :label="true" @click="hide">收缩</el-radio-button>
+    <el-radio-group v-model="isCollapse" class="expand" style="margin-top: 50px">
+      <el-radio-button style="width: 100%" v-if="isCollapse" :label="false" @click="expand"><span style="width: 150px;font-size: 18px">展开</span></el-radio-button>
+      <el-radio-button style="width: 100%" v-if="!isCollapse" :label="true" @click="hide"><span style="width: 150px;font-size: 18px">收缩</span></el-radio-button>
     </el-radio-group>
 
     <el-menu
+        style="margin-top: 10px"
         default-active="1"
         class="el-menu-vertical-demo"
         :collapse="isCollapse"
@@ -52,10 +53,10 @@ export default {
       // console.log(key, keyPath);
     },
     hide() {
-      this.$refs.nav.style.width = "100px";
+      this.$refs.nav.style.width = "120px";
     },
     expand() {
-      this.$refs.nav.style.width = "200px";
+      this.$refs.nav.style.width = "250px";
     },
   },
 };
@@ -64,8 +65,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .nav {
-  width: 200px;
-  height: 845px;
+  width: 250px;
+  height: 928px;
   box-shadow: 5px 5px 5px rgb(211, 211, 211);
   box-sizing: border-box;
   background-color: white;
@@ -80,15 +81,16 @@ export default {
   box-sizing: border-box;
 }
 .nav_item{
-  height: 65px !important;
+  height: 80px !important;
 }
 .nav_item img{
-  width: 30px;
+  width: 40px;
   border-radius: 40%;
   margin-left: 15px;
 }
 .nav_item span{
   margin-left: 20px;
+  font-size: 18px;
 }
 .el-menu {
   border-right: 0;
