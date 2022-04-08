@@ -32,7 +32,7 @@
           @selection-change="SelectionChange"
       >
         <el-table-column type="selection" width="40"/>
-        <el-table-column label="歌手头像" width="80">
+        <el-table-column label="歌手头像" width="100">
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
               <el-upload
@@ -65,7 +65,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="63"/>
-        <el-table-column label="歌手简介" width="400" show-overflow-tooltip>
+        <el-table-column label="歌手简介" width="500" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
@@ -73,7 +73,7 @@
         <el-table-column
             prop="type"
             label="歌手风格"
-            width="250"
+            width="300"
             show-overflow-tooltip
         >
           <template #default="scope">
@@ -526,6 +526,7 @@ export default {
 
 .demo-pagination-block {
   margin-left: 2%;
+  margin-top: 10px;
 }
 
 .showOverTooltip {

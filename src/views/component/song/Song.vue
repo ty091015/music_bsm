@@ -34,7 +34,7 @@
         @selection-change="SelectionChange"
       >
         <el-table-column type="selection" width="40" />
-        <el-table-column label="图片" width="60" style="width: 30px;overflow: hidden">
+        <el-table-column label="图片" width="100" style="width: 30px;overflow: hidden">
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
               <el-upload
@@ -71,12 +71,12 @@
             <p class="showOverTooltip">{{ scope.row.album }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲简介" width="200" show-overflow-tooltip>
+        <el-table-column label="歌曲简介" width="300" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.introduce }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="歌曲类型" width="200" show-overflow-tooltip>
+        <el-table-column label="歌曲类型" width="220" show-overflow-tooltip>
           <template #default="scope">
             <p class="showOverTooltip">{{ scope.row.type }}</p>
           </template>
@@ -85,7 +85,7 @@
           align="left"
           label="歌词"
           show-overflow-tooltip
-          width="140"
+          width="150"
         >
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
@@ -109,7 +109,7 @@
           prop="url"
           label="音乐地址"
           show-overflow-tooltip
-          width="140"
+          width="150"
         >
           <template #default="scope">
             <el-icon class="el-icon--center" @click="uploadClick(scope.row)">
@@ -647,6 +647,7 @@ export default {
 
 .demo-pagination-block {
   margin-left: 2%;
+  margin-top: 10px;
 }
 
 .showOverTooltip {

@@ -87,22 +87,22 @@
           </template>
         </el-table-column>
         <el-table-column prop="sex" label="性别" width="50"/>
-        <el-table-column label="收藏歌手" width="105" show-overflow-tooltip>
+        <el-table-column label="收藏歌手" width="130" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.collectSingerIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="收藏歌曲" width="105" show-overflow-tooltip>
+        <el-table-column label="收藏歌曲" width="130" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.collectSongIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="历史播放" width="105" show-overflow-tooltip>
+        <el-table-column label="历史播放" width="130" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.historySongIds }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="介绍" width="110" show-overflow-tooltip>
+        <el-table-column label="介绍" width="150" show-overflow-tooltip>
           <template #default="scope">
             <span class="showOverTooltip">{{ scope.row.introduce }}</span>
           </template>
@@ -110,7 +110,7 @@
         <el-table-column
             prop="hobby"
             label="爱好"
-            width="130"
+            width="150"
             show-overflow-tooltip
         >
           <template #default="scope">
@@ -590,6 +590,7 @@ export default {
 
 .demo-pagination-block {
   margin-left: 30px;
+  margin-top: 10px;
 }
 
 .showOverTooltip {
