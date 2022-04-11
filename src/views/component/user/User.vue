@@ -469,7 +469,7 @@ export default {
     },
     //删除
     deleteUser(row) {
-      ElMessageBox.confirm("确认删除", "Warning", {
+      ElMessageBox.confirm("确认删除", "是否删除", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning",
@@ -583,7 +583,7 @@ export default {
 
 .table {
   width: 100%;
-  min-height: 500px;
+  min-height: 620px;
   margin-left: 2%;
   overflow: auto;
 }
